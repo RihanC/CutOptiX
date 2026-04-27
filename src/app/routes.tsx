@@ -7,8 +7,13 @@ import { Optimization } from "./components/pages/Optimization";
 import { Reports } from "./components/pages/Reports";
 import { Analytics } from "./components/pages/Analytics";
 import { Settings } from "./components/pages/Settings";
+import { LoginPage } from "./components/pages/LoginPage";
 
 export const router = createBrowserRouter([
+  {
+    path: "/login",
+    Component: LoginPage,
+  },
   {
     path: "/",
     Component: DashboardLayout,

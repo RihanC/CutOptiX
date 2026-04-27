@@ -1,4 +1,4 @@
-import { Outlet, NavLink } from "react-router";
+import { Outlet, NavLink, useNavigate } from "react-router";
 import { 
   LayoutDashboard, 
   FolderPlus, 
@@ -10,7 +10,7 @@ import {
   Menu,
   X
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const menuItems = [
   { path: "/", label: "Dashboard", icon: LayoutDashboard },
@@ -24,6 +24,14 @@ const menuItems = [
 
 export function DashboardLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const isAuthenticated = localStorage.getItem("isAuthenticated");
+    if (!isAuthenticated) {
+      navigate("/login");
+    }
+  }, [navigate]);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -44,11 +52,20 @@ export function DashboardLayout() {
               <h1 className="font-semibold text-xl text-gray-900">CutOptix</h1>
             </div>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
             <div className="hidden sm:block text-right">
               <p className="text-sm font-medium text-gray-900">Admin User</p>
               <p className="text-xs text-gray-500">admin@cutoptix.com</p>
             </div>
+            <button 
+              onClick={() => {
+                localStorage.removeItem("isAuthenticated");
+                navigate("/login");
+              }}
+              className="text-xs font-semibold text-gray-500 hover:text-red-600 transition-colors cursor-pointer"
+            >
+              Logout
+            </button>
             <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-medium">
               A
             </div>
